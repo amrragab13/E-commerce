@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Infastructure.Data;
 
-namespace E_Commerce.Controllers
+namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
