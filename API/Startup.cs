@@ -3,6 +3,7 @@ using E_Commerce.Extentions;
 using E_Commerce.Helpers;
 using E_Commerce.Middleware;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,9 @@ namespace API
             services.AddDbContext<StoreContext>(x =>
                 x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<AppIdentityDbContext>(x =>
+                x.UseSqlServer(_config.GetConnectionString("IdentityConnection")));
+
             services.AddSingleton<IConnectionMultiplexer>(c => {
                 var config = ConfigurationOptions.Parse(_config.GetConnectionString("Redis"),
                     true);
@@ -39,8 +43,9 @@ namespace API
             });
 
             services.AddApplicationServices();
-
+            services.AddIdentityService(_config);
             services.AddSwaggerDocumention();
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -69,6 +74,7 @@ namespace API
 
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwaggerDocumention();

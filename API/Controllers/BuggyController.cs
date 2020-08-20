@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using E_Commerce.Error;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,13 @@ namespace E_Commerce.Controllers
         {
             _context = context;
         }
-
+        [HttpGet("testauth")]
+        [Authorize]
+        public ActionResult<string> GetSecretText()
+        {
+            return "Secret Shhh";
+        }
+        
         [HttpGet("notfound")]
         public ActionResult GetNotFoundRequest()
         {
