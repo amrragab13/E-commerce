@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Core.Entities
@@ -14,8 +15,9 @@ namespace Core.Entities
         {
             Id = id;
         }
-
+        [Required]
         public string Id { get; set; }
+        [Required]
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
     }
 }
